@@ -6,7 +6,7 @@ INSERT INTO oauth_client_details
     web_server_redirect_uri, authorities, access_token_validity,
     refresh_token_validity, additional_information, autoapprove)
 VALUES
-    ("techshop-web-app", "techshop-web-secret", "read,write",
+    ("techshop-web-app", "techshop-web-secret", "read,write,trust",
     "password,authorization_code,refresh_token", null, null, 36000, 160000, null, true);
     
 insert into product(id, name, description, type, price) values('ba3117f4-fa22-4254-a112-461ef4013d79', 'Notebook', 'i7 7th gen, 16GB RAM, 1TB HD, 480GB SSD 19 inches screen', 'Eletronic', 5000);
