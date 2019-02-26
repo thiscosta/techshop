@@ -19,8 +19,7 @@ public class CustomUserDetails implements UserDetails{
 		this.setUserEnabled(user.isEnabled());
 		
 		List<GrantedAuthority> grantedAuthorities = 
-				AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole());
-		
+				AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_"+user.getRole().toUpperCase().replaceAll(" ", ""));
 		this.setCustomAuthorities(grantedAuthorities);
 		
 	}

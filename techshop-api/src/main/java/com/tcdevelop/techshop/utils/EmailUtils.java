@@ -54,6 +54,7 @@ public class EmailUtils {
 				helper.setText(EmailUtils.emailBody(user), 
 						true
 				);
+				user.setConfirmHash("");
 				mailSender.send(mail);
 				
 			} catch (Exception e) {

@@ -84,7 +84,7 @@ public class UserService {
 				return emailUtils.sendActivationEmail(user);
 				
 			} else {
-				
+				user.setConfirmHash("");
 				return ResponseEntity.unprocessableEntity().body(new ErrorObject(
 						"You must wait at least 5 minutes between confirm solicitations", "", user));
 			

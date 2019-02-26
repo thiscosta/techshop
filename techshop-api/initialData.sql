@@ -1,5 +1,5 @@
 use techshop;
-insert into user(id, name, username, password, email, phone, role, is_enabled, confirm_hash) values('bde29048-9eb1-4b83-8506-c3ed9b0592a1','Thiago Costa', 'thiscosta', '123', 'thiscosta@email.com', '12345678', 'System Administrator', 1, 'fb6ba3ce-d872-41ad-afe6-8a2f14f36602');
+insert into user(id, name, username, password, email, phone, role, is_enabled, confirm_hash, last_confirm_solicitation) values('bde29048-9eb1-4b83-8506-c3ed9b0592a1','Thiago Costa', 'thiscosta', '123', 'thiscosta@email.com', '12345678', 'System Administrator', 1, 'fb6ba3ce-d872-41ad-afe6-8a2f14f36602', 0);
 
 INSERT INTO oauth_client_details
     (client_id, client_secret, scope, authorized_grant_types,

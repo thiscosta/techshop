@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,16 +27,19 @@ public class ClientController {
 	@Autowired
 	ClientService service;
 
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('read')")
 	@GetMapping
 	public ResponseEntity<List<Client>> listClientes() {
 		return ResponseEntity.ok(service.listClients());
 	}
 
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('write')")
 	@PostMapping
 	public ResponseEntity<@Valid Client> insertClient(@RequestBody @Valid Client client) {
 		return ResponseEntity.ok(service.upsertClient(client));
 	}
 
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('read')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Client> insertClient(@PathVariable String id) {
 
@@ -48,6 +52,7 @@ public class ClientController {
 		return ResponseEntity.ok(client);
 	}
 
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('write')")
 	@PatchMapping("/{id}")
 	public ResponseEntity<Client> updateClient(@PathVariable String id, @RequestBody @Valid Client client) {
 		Client newClient = service.getClientById(id);
@@ -62,6 +67,7 @@ public class ClientController {
 		
 	}
 	
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('trust')")
 	@DeleteMapping("/{id}")
 	public void deleteClient(@PathVariable String id) {
 		Client client = service.getClientById(id);

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,16 +27,19 @@ public class SaleItemController {
 	@Autowired
 	SaleItemService service;
 
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('read')")
 	@GetMapping
 	public ResponseEntity<List<SaleItem>> listSaleItems() {
 		return ResponseEntity.ok(service.listSaleItems());
 	}
 
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('write')")
 	@PostMapping
 	public ResponseEntity<@Valid SaleItem> insertSaleItem(@RequestBody @Valid SaleItem saleItem) {
 		return ResponseEntity.ok(service.upsertSaleItem(saleItem));
 	}
 
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('read')")
 	@GetMapping("/{id}")
 	public ResponseEntity<SaleItem> insertSaleItem(@PathVariable String id) {
 
@@ -48,6 +52,7 @@ public class SaleItemController {
 		return ResponseEntity.ok(saleItem);
 	}
 
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('write')")
 	@PatchMapping("/{id}")
 	public ResponseEntity<SaleItem> updateSaleItem(@PathVariable String id, @RequestBody @Valid SaleItem saleItem) {
 		SaleItem newSaleItem = service.getSaleItemById(id);
@@ -62,6 +67,7 @@ public class SaleItemController {
 		
 	}
 	
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('trust')")
 	@DeleteMapping("/{id}")
 	public void deleteSaleItem(@PathVariable String id) {
 		SaleItem saleItem = service.getSaleItemById(id);
