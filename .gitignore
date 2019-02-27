@@ -1,0 +1,8 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+\techshop-web\node_modules
+
+techshop-web/node_modules/
+
+techshop-web/Documentation/
