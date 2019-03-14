@@ -10,6 +10,8 @@ import { style } from "variables/Variables.jsx";
 
 import dashboardRoutes from "routes/dashboard.jsx";
 
+import { PrivateRoute } from '../../routes/private'
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -102,6 +104,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="wrapper">
+
         <NotificationSystem ref="notificationSystem" style={style} />
         <Sidebar {...this.props} />
         <div id="main-panel" className="main-panel" ref="mainPanel">
@@ -110,7 +113,7 @@ class Dashboard extends Component {
             {dashboardRoutes.map((prop, key) => {
               if (prop.name === "Notifications")
                 return (
-                  <Route
+                  <PrivateRoute
                     path={prop.path}
                     key={key}
                     render={routeProps => (
@@ -122,9 +125,9 @@ class Dashboard extends Component {
                   />
                 );
               if (prop.redirect)
-                return <Redirect from={prop.path} to={prop.to} key={key} />;
+                return <Redirect from={prop.path} to={prop.to} key={key} exact/>;
               return (
-                <Route path={prop.path} component={prop.component} key={key} />
+                <PrivateRoute path={prop.path} component={prop.component} key={key} />
               );
             })}
           </Switch>

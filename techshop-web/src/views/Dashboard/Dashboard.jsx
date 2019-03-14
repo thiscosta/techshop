@@ -17,6 +17,9 @@ import {
   responsiveBar,
   legendBar
 } from "variables/Variables.jsx";
+import { connect } from "react-redux";
+
+import { startLoadDashboardData } from '../../reducers/dashboard-reducer'
 
 class Dashboard extends Component {
   createLegend(json) {
@@ -29,6 +32,11 @@ class Dashboard extends Component {
     }
     return legend;
   }
+
+  componentDidMount() {
+    this.props.startLoadDashboardData()
+  }
+
   render() {
     return (
       <div className="content">
@@ -36,55 +44,45 @@ class Dashboard extends Component {
           <Row>
             <Col lg={3} sm={6}>
               <StatsCard
-                bigIcon={<i className="pe-7s-server text-warning" />}
-                statsText="Capacity"
-                statsValue="105GB"
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText="Updated now"
+                bigIcon={<i className="pe-7s-calculator text-success" />}
+                statsText="Vendas no mês"
+                statsValue={this.props.dashboardData.monthSales ? this.props.dashboardData.monthSales.length : 0}
               />
             </Col>
             <Col lg={3} sm={6}>
               <StatsCard
                 bigIcon={<i className="pe-7s-wallet text-success" />}
-                statsText="Revenue"
-                statsValue="$1,345"
-                statsIcon={<i className="fa fa-calendar-o" />}
-                statsIconText="Last day"
+                statsText="Lucro"
+                statsValue={'R$' + (this.props.dashboardData.revenue > 0 ? this.props.dashboardData.revenue : 0)}
               />
             </Col>
             <Col lg={3} sm={6}>
               <StatsCard
-                bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                statsText="Errors"
-                statsValue="23"
-                statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText="In the last hour"
+                bigIcon={<i className="pe-7s-box2 text-danger" />}
+                statsText="Produtos"
+                statsValue={this.props.dashboardData.products ? this.props.dashboardData.products.length : 0}
               />
             </Col>
             <Col lg={3} sm={6}>
               <StatsCard
-                bigIcon={<i className="fa fa-twitter text-info" />}
-                statsText="Followers"
-                statsValue="+45"
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText="Updated now"
+                bigIcon={<i className="pe-7s-users text-info" />}
+                statsText="Clientes"
+                statsValue={this.props.dashboardData.clients ? this.props.dashboardData.clients.length : 0}
               />
             </Col>
           </Row>
           <Row>
             <Col md={8}>
               <Card
-                statsIcon="fa fa-history"
                 id="chartHours"
-                title="Users Behavior"
-                category="24 Hours performance"
-                stats="Updated 3 minutes ago"
+                title="Vendas no ano"
+                category="Por mês"
                 content={
                   <div className="ct-chart">
                     <ChartistGraph
-                      data={dataSales}
+                      data={this.props.dashboardData.salesByMonth}
                       type="Line"
-                      options={optionsSales}
+                      options={this.props.dashboardData ? this.props.dashboardData.salesByMonthOptions : optionsSales}
                       responsiveOptions={responsiveSales}
                     />
                   </div>
@@ -96,16 +94,14 @@ class Dashboard extends Component {
             </Col>
             <Col md={4}>
               <Card
-                statsIcon="fa fa-clock-o"
-                title="Email Statistics"
-                category="Last Campaign Performance"
-                stats="Campaign sent 2 days ago"
+                title="Vendas por região"
+                category="Porcentagem de vendas por região"
                 content={
                   <div
                     id="chartPreferences"
                     className="ct-chart ct-perfect-fourth"
                   >
-                    <ChartistGraph data={dataPie} type="Pie" />
+                    <ChartistGraph data={this.props.dashboardData ? this.props.dashboardData.salesByRegion : [] } type="Pie" />
                   </div>
                 }
                 legend={
@@ -119,10 +115,8 @@ class Dashboard extends Component {
             <Col md={6}>
               <Card
                 id="chartActivity"
-                title="2014 Sales"
-                category="All products including Taxes"
-                stats="Data information certified"
-                statsIcon="fa fa-check"
+                title="Vendas por cliente no ano"
+                category="Número de vendas por cada cliente no ano"
                 content={
                   <div className="ct-chart">
                     <ChartistGraph
@@ -138,22 +132,6 @@ class Dashboard extends Component {
                 }
               />
             </Col>
-
-            <Col md={6}>
-              <Card
-                title="Tasks"
-                category="Backend development"
-                stats="Updated 3 minutes ago"
-                statsIcon="fa fa-history"
-                content={
-                  <div className="table-full-width">
-                    <table className="table">
-                      <Tasks />
-                    </table>
-                  </div>
-                }
-              />
-            </Col>
           </Row>
         </Grid>
       </div>
@@ -161,4 +139,13 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = store => ({
+  contentIsReady: store.login.contentIsReady,
+  dashboardData: store.dashboard.dashboardData
+})
+
+const mapDispatchToProps = {
+  startLoadDashboardData: startLoadDashboardData
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
