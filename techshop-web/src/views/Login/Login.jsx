@@ -36,15 +36,11 @@ class Login extends Component {
     handleClick = () => {
         if (this.state.email != null && this.state.password.length >= 2) {
             this.props.startLogin({ username: this.state.email, password: this.state.password })
-            console.log('DISPAROU NA VIEW')
         }
-        console.log('oi')
     }
 
-    componentDidUpdate(prevProps, prevState){
-        if(prevProps.authData == null && this.props.authData != null){
-            //redirecionar para o dashboard
-            console.log('atualizou o props')
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.authData == null && this.props.authData != null) {
             this.props.history.push("/dashboard")
         }
     }

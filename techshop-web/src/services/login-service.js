@@ -8,7 +8,7 @@ const LoginService = {
         formData.append('grant_type', 'password')
         formData.append('username', user.username)
         formData.append('password', user.password)
-
+        
         return fetch(`${api}/oauth/token`, {
             method: 'POST',
             headers: new Headers({
@@ -18,9 +18,10 @@ const LoginService = {
         })
             .then(response => response.json())
             .then(json => {
+                localStorage.setItem('authData', JSON.stringify(json)) 
                 return json
             }).catch(error => {
-                return Promise.reject(Error(error.message))
+                return error
             })
     }
 

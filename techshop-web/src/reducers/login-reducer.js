@@ -10,7 +10,8 @@ export const failedLogin = createAction(LOGIN.FAILED)
 const initialState = {
     contentIsReady: true,
     error: null,
-    authData: null
+    authData: null,
+    loggedUser: null
 }
 
 export default function loginReducer(state = initialState, action) {
@@ -18,17 +19,17 @@ export default function loginReducer(state = initialState, action) {
         case LOGIN.START:
             return {
                 ...state,
-                contentIsReady: false
+                contentIsReady: false,
+                error: null,
+                erroMsg: ''
             }
         case LOGIN.SUCCESS:
-
-            localStorage.setItem('authData', JSON.stringify(action.payload.authData))   
-
             return {
                 ...state,
                 contentIsReady: true,
                 error: null,
-                authData: action.payload.authData
+                authData: action.payload.authData,
+                loggedUser: action.payload.loggedUser
             }
         case LOGIN.FAILED:
             let erroMsg

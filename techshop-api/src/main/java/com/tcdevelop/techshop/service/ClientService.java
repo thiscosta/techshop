@@ -19,7 +19,7 @@ public class ClientService {
 	}
 	
 	public Client getClientById(String id) {
-		return clientRepository.findById(id);
+		return clientRepository.getOne(id);
 	}
 	
 	public Client upsertClient(Client client) {
@@ -27,7 +27,8 @@ public class ClientService {
 	}
 	
 	public void deleteClient(Client client) {
-		clientRepository.delete(client);
+		//clientRepository.delete(client);
+		clientRepository.deleteById(client.getId());
 	}
 	
 

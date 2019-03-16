@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { Route, Redirect } from "react-router-dom";
+import SecurityService from '../services/security-service';
 
 export function LoginRoute({ component: Component, ...rest }) {
     return (
         <Route
             {...rest}
             render={props =>
-                localStorage.getItem('authData') == null ? (
+                !SecurityService.checkTokenValidityAndRefresh() ? (
                     <Component {...props} />
                 ) : (
                         <Redirect

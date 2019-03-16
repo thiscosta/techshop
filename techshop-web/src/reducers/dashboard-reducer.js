@@ -22,7 +22,7 @@ export default function dashboardReducer(state = initialState, action) {
         case LOAD_DASHBOARD_DATA.SUCCESS:
             return {
                 ...state,
-                dashboardData: action.payload.dashboardData,
+                dashboardData: action.payload.parameters,
                 contentIsReady: false
             }
         default:

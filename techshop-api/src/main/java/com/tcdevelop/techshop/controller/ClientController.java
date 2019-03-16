@@ -67,7 +67,7 @@ public class ClientController {
 		
 	}
 	
-	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('trust')")
+	@PreAuthorize("(hasRole('ROLE_SYSTEMADMINISTRATOR') or hasRole('ROLE_STANDARDUSER')) and #oauth2.hasScope('write')")
 	@DeleteMapping("/{id}")
 	public void deleteClient(@PathVariable String id) {
 		Client client = service.getClientById(id);
@@ -75,6 +75,8 @@ public class ClientController {
 		if (client == null) {
 			ResponseEntity.notFound().build();
 		}
+		
+		System.out.println(client.getId());
 		
 		service.deleteClient(client);
 	}

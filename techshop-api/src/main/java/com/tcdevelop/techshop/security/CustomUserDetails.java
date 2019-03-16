@@ -14,6 +14,7 @@ public class CustomUserDetails implements UserDetails{
 	private static final long serialVersionUID = -995399891697239946L;
 
 	public CustomUserDetails(User user) {
+		this.setId(user.getId());
 		this.setCustomUsername(user.getUsername());
 		this.setCustomPassword(user.getPassword());
 		this.setUserEnabled(user.isEnabled());
@@ -24,10 +25,21 @@ public class CustomUserDetails implements UserDetails{
 		
 	}
 	
+	private String id;
 	private String customUsername;
 	private String customPassword;
 	private Collection<? extends GrantedAuthority> customAuthorities;
 	private boolean isUserEnabled;
+	
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getCustomUsername() {
 		return customUsername;

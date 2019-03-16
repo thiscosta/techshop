@@ -1,10 +1,13 @@
-import { takeEvery, all, call, put, actionChannel } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects'
 
 import {
     LOAD_DASHBOARD_DATA, successLoadDashboardData,
 } from '../reducers/dashboard-reducer'
 
 import DashboardService from '../services/dashboard-service'
+
+import SagaDispatcher from './sagaDispatcher'
+
 //Sagas
 //LOADS
 function* loadDashboardData() {
@@ -40,7 +43,7 @@ function* loadDashboardData() {
             series: [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             ]
-        };
+        }
 
 
         result.salesData.forEach(sale => {
@@ -104,13 +107,13 @@ function* loadDashboardData() {
                     break
             }
 
-        });
+        })
 
 
         let salesByRegionData = {
             labels: [],
             series: []
-        };
+        }
 
 
         if (salesByRegion.south > 0) {
@@ -141,10 +144,6 @@ function* loadDashboardData() {
         }
 
 
-        console.log('salesByRegion: ')
-        console.log(salesByRegionData)
-
-
         var salesByMonthOptions = {
             low: 0,
             high: Math.max(...salesByMonth.series[0]) * 5 ,
@@ -160,10 +159,7 @@ function* loadDashboardData() {
             chartPadding: {
                 right: 50
             }
-        };
-
-        console.log('salesByMonth: ')
-        console.log(salesByMonth)
+        }
 
         let dashboardFormattedData = {
             monthSales: monthSales,
@@ -175,7 +171,9 @@ function* loadDashboardData() {
             salesByMonthOptions: salesByMonthOptions
         }
 
-        yield put(successLoadDashboardData({ dashboardData: dashboardFormattedData }))
+        SagaDispatcher.sagaDispatch(dashboardFormattedData, successLoadDashboardData)
+
+        //yield put(successLoadDashboardData({ dashboardData: dashboardFormattedData }))
     }
     catch (error) {
 

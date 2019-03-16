@@ -20,6 +20,7 @@ import {
 import { connect } from "react-redux";
 
 import { startLoadDashboardData } from '../../reducers/dashboard-reducer'
+import SecurityService from "../../services/security-service";
 
 class Dashboard extends Component {
   createLegend(json) {
@@ -112,7 +113,7 @@ class Dashboard extends Component {
           </Row>
 
           <Row>
-            <Col md={6}>
+            <Col md={12}>
               <Card
                 id="chartActivity"
                 title="Vendas por cliente no ano"

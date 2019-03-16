@@ -2,6 +2,7 @@ package com.tcdevelop.techshop.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Sale {
 	
 	@NotNull(message = "The client of the sale cannot be null or empty")
 	@JoinColumn(name = "client_id")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Client client;
 	
 	@Positive(message = "The shipping of the sale cannot be null or empty")

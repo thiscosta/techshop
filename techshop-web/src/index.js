@@ -23,7 +23,7 @@ import Login from "./views/Login/Login"
 import Dashboard from './layouts/Dashboard/Dashboard'
 
 const sagaMiddleware = createSagaMiddleware()
-const store = createStore(
+export const store = createStore(
   rootReducer,
   compose(applyMiddleware(sagaMiddleware))
 )

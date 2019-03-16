@@ -6,8 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.tcdevelop.techshop.model.Client;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {
+public interface ClientRepository extends JpaRepository<Client, String> {
 
-	Client findById(String uuid);
 
 }
