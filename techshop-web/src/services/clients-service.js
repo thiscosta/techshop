@@ -31,7 +31,6 @@ const ClientsService = {
                 })
             })
                 .catch(error => {
-                    console.log(error)
                     return { error: 'Could not delete client' }
                 })
         }
@@ -39,25 +38,28 @@ const ClientsService = {
 
     updateClient(client) {
         if (SecurityService.checkTokenValidityAndRefresh()) {
+            try {
 
-            const formData = new FormData()
-            formData.append(client)
-
-            return fetch(`${api}/clients/${client.id}`, {
-                method: 'PATCH',
-                headers: new Headers({
-                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('authData')).access_token,
-                }),
-                body: formData
-            })
-                .then(response => response.json())
-                .then(json => {
-                    return json
-                }).catch(error => {
-                    console.log(error)
-                    return error
+                return fetch(`${api}/clients/${client.id}`, {
+                    method: 'PATCH',
+                    headers: new Headers({
+                        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('authData')).access_token,
+                        'Content-Type' : 'application/json'
+                    }),
+                    body: JSON.stringify(client)
                 })
+                    .then(response => {
+                        response.json()
+                    })
+                    .then(json => {
+                        return json
+                    }).catch(error => {
+                        return error
+                    })
+            } catch (error) {
+            }
         }
+
     }
 
 }

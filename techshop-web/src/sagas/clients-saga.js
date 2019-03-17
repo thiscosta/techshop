@@ -30,8 +30,7 @@ function* updateClient(action) {
         const result = yield call(ClientsService.updateClient, action.payload.client)
 
         SagaDispatcher.sagaDispatch(result, successUpdateClient)
-
-        yield call(startLoadListClients)
+        SagaDispatcher.sagaDispatch(null, startLoadListClients)
 
     }
     catch (error) {
@@ -42,6 +41,8 @@ function* updateClient(action) {
 //DELETE
 function* deleteClient(action) {
     try {
+
+
         const result = yield call(ClientsService.deleteClient, action.payload.client)
 
         SagaDispatcher.sagaDispatch(result, startLoadListClients)

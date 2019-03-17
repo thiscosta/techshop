@@ -44,7 +44,7 @@ public class Address {
 	
 	@JsonIgnoreProperties("address")
 	@OneToOne(mappedBy = "address", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+            fetch = FetchType.LAZY, optional = false)
 	private Client client;
 
 	public String getId() {

@@ -4,6 +4,10 @@ import { store } from '../index'
 const SagaDispatcher = {
 
     sagaDispatch(result, action) {
+        if(result == null){
+            store.dispatch(action())
+            return
+        }
         if (!result.hasOwnProperty('error')) {
             store.dispatch(action({ parameters: result }))
             return

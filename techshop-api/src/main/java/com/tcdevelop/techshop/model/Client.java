@@ -9,10 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -33,14 +32,15 @@ public class Client {
 	private String name;
 	
 	@JsonIgnoreProperties("client")
-	@NotNull(message = "The address of the client cannot be null or empty")
+	//@NotNull(message = "The address of the client cannot be null or empty")
 	@JoinColumn(name = "address_id")
-	@OneToOne(orphanRemoval = true)
+	@OneToOne
 	private Address address;
 	
 	@Positive(message = "The credit of the client cannot be null or empty")
 	private double credit;
 	
+	@Transient
 	@JsonIgnoreProperties("client")
 	@OneToMany(mappedBy = "client", orphanRemoval = true)
 	private List<Sale> sales;

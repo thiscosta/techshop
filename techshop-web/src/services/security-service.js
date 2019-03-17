@@ -34,8 +34,6 @@ const SecurityService = {
 
                 if (!json.hasOwnProperty('error')) {
                     if (new Date(authData.grant_time + (authData.expires_in * 1000)).getTime() <= new Date().getTime()) {
-                        console.log('vai setar o novo authData:')
-                        console.log(json)
                         localStorage.setItem('authData', JSON.stringify(json))
 
                     }
